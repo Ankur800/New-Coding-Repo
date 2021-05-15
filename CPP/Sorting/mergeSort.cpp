@@ -20,7 +20,7 @@ void merge(int *arr, int l, int mid, int r) {
 		temp[k++] = arr[j++];
 	}
 	k = l;
-	for(int i=0;i<size;i++) {
+	for(i=0;i<size;i++) {
 		arr[k++] = temp[i];
 	}
 }
