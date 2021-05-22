@@ -4,9 +4,9 @@
 using namespace std;
 
 int main() {
-	int n = 15;
+	int n = 27;
 
-	cout<<(1 << 5)<<endl;
+	cout<<log2(n) / log2(3)<<endl;
 
 	return 0;
 }
