@@ -1,4 +1,4 @@
-/*
+x/*
 	Given two sorted arrays. Merge them with O(1) space or merge them without using extra space.
 	I/P:	arr1[] = {10, 20, 30, 40, 50}	arr2[] = {5, 15, 25, 35, 45}
 	O/P:	arr1[] = {5, 10, 15, 20, 25}	arr2[] = {30, 35, 40, 45, 50}
@@ -18,7 +18,7 @@ void merge(int arr1[], int arr2[], int n1, int n2) {
 			}
 		}
 
-		// For Second Array
+		// For First and Second Array
 		for(;i<n1;i++) {
 			if((i+gap-n1) < n2 ) {
 				if(arr1[i] > arr2[i+gap-n1]) {
@@ -27,7 +27,7 @@ void merge(int arr1[], int arr2[], int n1, int n2) {
 			}
 		}
 
-		// For Third Array
+		// For Second Array
 		for(i=0;i+gap<n2;i++) {
 			if(arr2[i] > arr2[i+gap]) {
 				swap(arr2[i], arr2[i+gap]);

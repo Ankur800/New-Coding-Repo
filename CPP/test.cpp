@@ -1,12 +1,12 @@
-#include<iostream>
-#include<cmath>
-#include<string>
+#include<bits/stdc++.h>
 using namespace std;
 
 int main() {
-	int n = 27;
-
-	cout<<log2(n) / log2(3)<<endl;
+	int arr[] = {6, 5, 4, 3, 2, 1};
+	sort(arr, arr+5);
+	for(int i=0;i<6;i++) {
+		cout<<arr[i]<<" ";
+	}
 
 	return 0;
 }
