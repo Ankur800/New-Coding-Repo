@@ -1,79 +1,59 @@
+/*
+	Given a binary tree. Calculate it's diameter.
+	A diameter is the maximum distance between two leaf nodes.
+	I/P:							10
+								   /  \
+								 20	   70
+								/  \
+							  30	80
+							 /  \	  \
+						   40	 50	   90
+						  /				 \
+						60				  18
+
+	O/P:	7 (distance between NODE 60 and NODE 18)
+*/
 #include<iostream>
-#include<climits>
 using namespace std;
 
-class Node {
-public:
-	int data;
-	Node* left;
-	Node* right;
-	Node(int _data) {
-		data = _data;
-		left = NULL;
-		right = NULL;
-	}
+class Node{
+	public:
+		int data;
+		Node *left, *right;
+		Node(int x) {
+			data = x;
+			left = right = NULL;
+		}
 };
 
-int calcHeight(Node* root) {
+int getDiameter(Node *root, int &diameter) {
 	if(root == NULL) {
 		return 0;
 	}
-	int lHeight = calcHeight(root->left);
-	int rHeight = calcHeight(root->right);
 
-	return max(lHeight, rHeight) + 1;
-}
+	int lh = getDiameter(root->left, diameter);
+	int rh = getDiameter(root->right, diameter);
 
-int calcDiameter(Node* root) {		// O(v^2)
-	if(root == NULL) {
-		return 0;
-	}
-	int lHeight = calcHeight(root->left);
-	int rHeight = calcHeight(root->right);
-	int currDiameter = lHeight + rHeight + 1;
+	diameter = max(diameter, lh+rh+1);
 
-	int lDiameter = calcDiameter(root->left);
-	int rDiameter = calcDiameter(root->right);
-
-	return max(currDiameter, max(lDiameter, rDiameter));
-}
-
-int calculateDiameter(Node* root, int* height) {	// O(v)
-	if(root == NULL) {
-		*height = 0;
-		return 0;
-	}
-
-	int lh = 0, rh = 0;
-	int lDiameter = calculateDiameter(root->left, &lh);
-	int rDiameter = calculateDiameter(root->right, &rh);
-
-	int currDiameter = lh + rh + 1;
-	*height = max(lh, rh) + 1;
-
-	return max(currDiameter, max(lDiameter, rDiameter));
+	return 1 + max(lh, rh);
 }
 
 int main() {
+	Node *root = new Node(10);
+	root->left = new Node(20);
+	root->right = new Node(70);
+	root->left->left = new Node(30);
+	root->left->right = new Node(80);
+	root->left->left->left = new Node(40);
+	root->left->left->right = new Node(50);
+	root->left->right->right = new Node(90);
+	root->left->left->left->left = new Node(60);
+	root->left->right->right->right = new Node(18);
 
-	/*
-				1
-			  /   \
-			 2     3
-			/ \   / \
-		   4   5 6   7
-	*/
+	int diameter = 0;
+	getDiameter(root, diameter);
 
-	Node* root = new Node(1);
-	root->left = new Node(2);
-	root->right = new Node(3);
-	root->left->left = new Node(4);
-	root->left->right = new Node(5);
-	root->right->left = new Node(6);
-	root->right->right = new Node(7);
-
-	int height = 0;
-	int diameter = calculateDiameter(root, &height);
 	cout<<diameter<<endl;
 
 	return 0;

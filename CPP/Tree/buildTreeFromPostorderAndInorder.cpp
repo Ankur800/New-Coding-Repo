@@ -1,3 +1,15 @@
+/*
+	Given postorder and inorder traversals of a binary tree. Construct the tree.
+	I/P:	postorder[]:	{4, 2, 5, 3, 1};
+			inorder[]:		{4, 2, 1, 5, 3};
+
+	O/P:				1
+					   / \
+					  2	  3
+					 /	 /
+					4	5
+*/
+
 #include<iostream>
 using namespace std;
 
@@ -22,17 +34,23 @@ int search(int inorder[], int start, int end, int curr) {
 	return -1;
 }
 
-Node* buildTree(int postorder[], int inorder[], int start, int end, int *idx) {
+Node* buildTree(int postorder[], int inorder[], int start, int end, int &idx) {
+	
 	if(start > end) {
 		return NULL;
 	}
-	int curr = postorder[*idx];
-	(*idx)--;
-	Node* node = new Node(curr);
+
+	int curr = postorder[idx];
+	idx--;
+
+	Node *node = new Node(curr);
+
 	if(start == end) {
 		return node;
 	}
+
 	int pos = search(inorder, start, end, curr);
+
 	node->right = buildTree(postorder, inorder, pos+1, end, idx);
 	node->left = buildTree(postorder, inorder, start, pos-1, idx);
 
@@ -52,9 +70,11 @@ int main() {
 	int postorder[] = {4, 2, 5, 3, 1};
 	int inorder[] = {4, 2, 1, 5, 3};
 
-	int lastIndex = 4;	// because we need the last index
+	int n = sizeof(inorder) / sizeof(inorder[0]);
 
-	Node* root = buildTree(postorder, inorder, 0, 4, &lastIndex);
+	int lastIndex = n-1;	// because we need the last index
+
+	Node* root = buildTree(postorder, inorder, 0, n-1, lastIndex);
 	printInorder(root);
 
 	return 0;

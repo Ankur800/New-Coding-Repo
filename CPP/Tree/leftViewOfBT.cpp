@@ -1,3 +1,17 @@
+/*
+	Print Left View of a given Binary Tree
+
+	I/P:
+				1
+			  /   \	
+			 2     3		
+			/ \   / \
+		   4   5 6   7
+
+	O/P:	1 	2	4
+	
+*/
+
 #include<iostream>
 #include<queue>
 using namespace std;
@@ -25,33 +39,23 @@ void leftView(Node* root) {
 	while(!q.empty()) {
 		int n = q.size();
 		for(int i=0;i<n;i++) {
-			Node* curr = q.front();
+			Node *node = q.front();
 			q.pop();
 
 			if(i == 0) {
-				cout<<curr->data<<" ";
+				cout<<node->data<<" ";
 			}
-
-			if(curr->left) {
-				q.push(curr->left);
+			if(node->left) {
+				q.push(node->left);
 			}
-			if(curr->right) {
-				q.push(curr->right);
+			if(node->right) {
+				q.push(node->right);
 			}
 		}
 	}
 }
 
 int main() {
-
-	/*
-				1
-			  /   \	
-			 2     3		Left View = [1, 2, 4]
-			/ \   / \
-		   4   5 6   7
-	*/
-
 	Node* root = new Node(1);
 	root->left = new Node(2);
 	root->right = new Node(3);

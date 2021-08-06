@@ -1,3 +1,24 @@
+/*
+	Given a binary tree, check whether it is height balanced binary tree or not?
+	I/P:	Tree-1
+				1							
+			  /   \						  
+			 2     3
+			/ \   / \					
+		   4   5 6   7	
+
+	O/P: 	Yes
+
+	I/P:	Tree-2
+					1
+				   /
+				  2
+				 /
+				3
+
+	O/P:	No
+*/
+
 #include<iostream>
 #include<cmath>
 using namespace std;
@@ -14,71 +35,23 @@ public:
 	}
 };
 
-int height(Node* root) {
+int isBalancedTree(Node* root) {		// O(v)
 	if(root == NULL) {
 		return 0;
 	}
-	int lHeight = height(root->left);
-	int rHeight = height(root->right);
 
-	return max(lHeight, rHeight) + 1;
-}
+	int lh = isBalancedTree(root->left);
+	if(lh < 0) return -1;
 
-bool isBalanced(Node* root) {		// O(v^2)
-	if(root == NULL) {
-		return true;
-	}
+	int rh = isBalancedTree(root->right);
+	if(rh < 0) return -1;
 
-	if(isBalanced(root->left) == false) {
-		return false;
-	}
-	if(isBalanced(root->right) == false) {
-		return false;
-	}
+	if(abs(lh - rh) > 1) return -1;		// -1 means not balanced
 
-	int lh = height(root->left);
-	int rh = height(root->right);
-
-	if(abs(lh - rh) <= 1) {
-		return true;
-	} else {
-		return false;
-	}
-}
-
-bool isBalancedTree(Node* root, int* height) {		// O(v)
-	if(root == NULL) {
-		return true;
-	}
-
-	int lh = 0, rh = 0;
-	if(isBalancedTree(root->left, &lh) == false) {
-		return false;
-	}
-	if(isBalancedTree(root->right, &rh) == false) {
-		return false;
-	}
-
-	*height = max(lh, rh) + 1;
-	if(abs(lh - rh) <= 1) {
-		return true;
-	} else {
-		return false;
-	}
+	return max(lh, rh) + 1;
 }
 
 int main() {
-
-	/*			
-			BALANCED BINARY TREE
-
-				1							
-			  /   \						  
-			 2     3
-			/ \   / \					
-		   4   5 6   7				   
-	*/
-
 	Node* root = new Node(1);
 	root->left = new Node(2);
 	root->right = new Node(3);
@@ -89,28 +62,18 @@ int main() {
 
 	int height = 0;
 
-	if(isBalancedTree(root, &height)) {
+	if(isBalancedTree(root) != -1) {
 		cout<<"Tree-1 is Balanced"<<endl;
 	} else {
 		cout<<"Tree-1 is NOT Balanced"<<endl;
 	}
-
-	/* 
-			NOT BALANCED TREE
-
-					1
-				   /
-				  2
-				 /
-				3
-	*/
 
 	Node* root2 = new Node(1);
 	root2->left = new Node(2);
 	root2->left->left = new Node(3);
 
 	int height2 = 0;
-	if(isBalancedTree(root2, &height2)) {
+	if(isBalancedTree(root2) != -1) {
 		cout<<"Tree-2 is Balanced"<<endl;
 	} else {
 		cout<<"Tree-2 is NOT Balanced"<<endl;
